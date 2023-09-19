@@ -18,13 +18,13 @@ class ItemButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(
               pageicon,
-              size: 30,
+              size: 25,
               color: currentSelected ? Colors.white : Colors.black,
             ),
             Text(

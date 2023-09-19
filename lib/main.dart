@@ -1,4 +1,4 @@
-import 'package:curvednavbar_implementation/bottom_navigation_bar.dart';
+import 'package:curvednavbar_implementation/notched_bottomnavbar.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(Screen());
