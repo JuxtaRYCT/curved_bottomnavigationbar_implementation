@@ -1,6 +1,6 @@
 import 'package:curvednavbar_implementation/items.dart';
-import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_flutter/icons_flutter.dart';
 import 'dart:ui' as ui;
 
 class BottomNavBar extends StatefulWidget {
@@ -14,40 +14,25 @@ final pages = ['Home', 'Timeline', 'Leaderboard', 'Profile'];
 
 class _BottomNavBarState extends State<BottomNavBar>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
+  late AnimationController animationController;
+  late Animation degOneTranslationAnimation;
+  @override
+  void initState() {
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 250));
+    degOneTranslationAnimation =
+        Tween(begin: 0.0, end: 1.0).animate(animationController);
+    super.initState();
+    animationController.addListener(() {
+      setState(() {});
+    });
+  }
+
   int currentScreen = 0;
 
   double radtodeg(double radian) {
     double unitrad = 57.2957795;
     return radian / unitrad;
-  }
-
-  late AnimationController animationController;
-  late Animation degOneTranslationAnimation;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   animationController =
-  //       AnimationController(vsync: this, duration: Duration(milliseconds: 250));
-  //   degOneTranslationAnimation =
-  //       Tween(begin: 0.0, end: 1.0).animate(animationController);
-  //   super.initState();
-  //   animationController.addListener(() {
-  //     setState(() {});
-  //   });
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 250));
-    degOneTranslationAnimation =
-        Tween(begin: 0.0, end: 1.0).animate(animationController);
-    animationController.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -80,119 +65,6 @@ class _BottomNavBarState extends State<BottomNavBar>
                     CustomPaint(
                       size: Size(size.width, (size.width * 0.2).toDouble()),
                       painter: NotchedBarPainter(),
-                    ),
-                    Center(
-                      heightFactor: 0,
-                      child: SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Center(
-                          child: Stack(
-                            children: <Widget>[
-                              Transform.translate(
-                                offset: Offset.fromDirection(radtodeg(190),
-                                    degOneTranslationAnimation.value * 100),
-                                child: CircularFAB(
-                                  color: Colors.white,
-                                  width: 40,
-                                  height: 40,
-                                  icon: const Icon(
-                                    Icons.one_k,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: Offset.fromDirection(radtodeg(220),
-                                    degOneTranslationAnimation.value * 100),
-                                child: CircularFAB(
-                                  color: Colors.white,
-                                  width: 40,
-                                  height: 40,
-                                  icon: const Icon(
-                                    Icons.one_k,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: Offset.fromDirection(radtodeg(250),
-                                    degOneTranslationAnimation.value * 100),
-                                child: CircularFAB(
-                                  color: Colors.white,
-                                  width: 40,
-                                  height: 40,
-                                  icon: const Icon(
-                                    Icons.one_k,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: Offset.fromDirection(radtodeg(280),
-                                    degOneTranslationAnimation.value * 100),
-                                child: CircularFAB(
-                                  color: Colors.white,
-                                  width: 40,
-                                  height: 40,
-                                  icon: const Icon(
-                                    Icons.one_k,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: Offset.fromDirection(radtodeg(310),
-                                    degOneTranslationAnimation.value * 100),
-                                child: CircularFAB(
-                                  color: Colors.white,
-                                  width: 40,
-                                  height: 40,
-                                  icon: const Icon(
-                                    Icons.one_k,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: Offset.fromDirection(radtodeg(340),
-                                    degOneTranslationAnimation.value * 100),
-                                child: CircularFAB(
-                                  color: Colors.white,
-                                  width: 40,
-                                  height: 40,
-                                  icon: const Icon(
-                                    Icons.one_k,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              CircularFAB(
-                                color: const Color.fromARGB(255, 239, 66, 54),
-                                width: 60,
-                                height: 60,
-                                icon: const Icon(
-                                  Icons.question_mark_rounded,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  if (animationController.isCompleted) {
-                                    animationController.reverse();
-                                  } else {
-                                    animationController.forward();
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                     ),
                     Container(
                       width: size.width,
@@ -230,6 +102,7 @@ class _BottomNavBarState extends State<BottomNavBar>
                             pageicon: Icons.leaderboard,
                             currentSelected: currentScreen == 2,
                             onTap: () {
+                              print('pressed');
                               setState(
                                 () {
                                   currentScreen = 2;
@@ -252,24 +125,172 @@ class _BottomNavBarState extends State<BottomNavBar>
                         ],
                       ),
                     ),
-                    // Positioned(
-                    //   right: (size.width / 2.0) - 30,
-                    //   bottom: 100,
-                    //   child: Stack(
-                    //     children: <Widget>[
-                    //       CircularFAB(
-                    //         color: const Color.fromARGB(255, 239, 66, 54),
-                    //         width: 60,
-                    //         height: 60,
-                    //         icon: const Icon(
-                    //           Icons.question_mark_rounded,
-                    //           color: Colors.white,
-                    //         ),
-                    //         onPressed: () {},
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Stack(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(183),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_1,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(208),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_2,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(233),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_3,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(258),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_4,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(283),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_5,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(308),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_6,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(333),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_7,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Transform.translate(
+                        offset: Offset.fromDirection(radtodeg(358),
+                            degOneTranslationAnimation.value * 110),
+                        child: CircularFAB(
+                          color: const Color.fromARGB(255, 252, 243, 197),
+                          width: 35,
+                          height: 35,
+                          icon: const Icon(
+                            MaterialCommunityIcons.numeric_8,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: CircularFAB(
+                        color: const Color.fromARGB(255, 239, 66, 54),
+                        width: 70,
+                        height: 70,
+                        icon: const Icon(
+                          Icons.question_mark_rounded,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          print('Pressed');
+                          if (animationController.isCompleted) {
+                            animationController.reverse();
+                          } else {
+                            animationController.forward();
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -324,9 +345,13 @@ class NotchedBarPainter extends CustomPainter {
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
     paint_0_fill.shader = ui.Gradient.linear(
         Offset(size.width * 0.5000000, size.height * -2.714658e-9),
-        Offset(size.width * 0.5000000, size.height),
-        [Color(0xffEF4136).withOpacity(1), Color(0xffFAA83F).withOpacity(1)],
-        [0.0917048, 1]);
+        Offset(size.width * 0.5000000, size.height), [
+      const Color(0xffEF4136).withOpacity(1),
+      const Color(0xffFAA83F).withOpacity(1)
+    ], [
+      0.0917048,
+      1
+    ]);
     canvas.drawPath(path_0, paint_0_fill);
   }
 
@@ -356,7 +381,11 @@ class CircularFAB extends StatelessWidget {
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       width: width,
       height: height,
-      child: IconButton(icon: icon, enableFeedback: true, onPressed: onPressed),
+      child: IconButton(
+        icon: icon,
+        enableFeedback: true,
+        onPressed: onPressed,
+      ),
     );
   }
 }

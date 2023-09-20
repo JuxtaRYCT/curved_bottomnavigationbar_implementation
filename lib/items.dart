@@ -30,6 +30,8 @@ class ItemButton extends StatelessWidget {
             Text(
               pagename,
               style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 12,
                   color: currentSelected ? Colors.white : Colors.black,
                   fontWeight:
                       currentSelected ? FontWeight.bold : FontWeight.normal),
